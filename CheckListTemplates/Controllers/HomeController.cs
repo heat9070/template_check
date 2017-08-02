@@ -18,9 +18,7 @@ namespace CheckListTemplates.Controllers
             ChartSpace chartSpace1 = chartPart1.ChartSpace;
 
             DocumentFormat.OpenXml.Drawing.Charts.Chart chart1 = chartSpace1.GetFirstChild<DocumentFormat.OpenXml.Drawing.Charts.Chart>();
-
             PlotArea plotArea1 = chart1.GetFirstChild<PlotArea>();
-
             BarChart barChart1 = plotArea1.GetFirstChild<BarChart>();
 
             //BarChartSeries barChartSeries1 = barChart1.Elements<BarChartSeries>().ElementAtOrDefault(2);
@@ -41,11 +39,11 @@ namespace CheckListTemplates.Controllers
                     NumericPoint numericPoint3 = numberingCache1.Elements<NumericPoint>().ElementAt(2);
 
                     NumericValue numericValue1 = numericPoint1.GetFirstChild<NumericValue>();
-                    numericValue1.Text = ".10";
+                    numericValue1.Text = ".20";
 
 
                     NumericValue numericValue2 = numericPoint2.GetFirstChild<NumericValue>();
-                    numericValue2.Text = ".10";
+                    numericValue2.Text = ".00";
 
 
                     NumericValue numericValue3 = numericPoint3.GetFirstChild<NumericValue>();
@@ -60,7 +58,7 @@ namespace CheckListTemplates.Controllers
 
         public ActionResult Index()
         {
-            PresentationDocument oPDoc = PresentationDocument.Open(Server.MapPath("~/App_Data/TDM.pptx"), true);
+            PresentationDocument oPDoc = PresentationDocument.Open(Server.MapPath("~/App_Data/TDMGuestServices.pptx"), true);
             PresentationPart oPPart = oPDoc.PresentationPart;
             SlidePart sectionSlidePart = (SlidePart)oPPart.GetPartById("rId3");
             SlidePart sectionSlidePart2 = (SlidePart)oPPart.GetPartById("rId4");
@@ -89,19 +87,23 @@ namespace CheckListTemplates.Controllers
             //tr.Append(tc1);
             //tbl.Append(tr);
 
-            foreach (var chartPart1 in sectionSlidePart2.ChartParts)
-            {
-                try
-                {
-                    ChangeChartPart(chartPart1);
+            ChangeChartPart(sectionSlidePart2.ChartParts.ElementAt(0));
 
-                }
-                catch (Exception ex)
-                {
+            //foreach (var chartPart1 in sectionSlidePart2.ChartParts)
+            //{
+            //    try
+            //    {
+            //        ChangeChartPart(chartPart1);
 
-                }
+            //    }
+            //    catch (Exception ex)
+            //    {
 
-            }
+            //    }
+
+            //}
+
+
             //SlideLayoutPart slideLayoutPart = (SlideLayoutPart)sectionSlidePart.GetPartById("rId1");
             //DocumentFormat.OpenXml.Drawing.TextBody textBody1 = sectionSlidePart.SlideParts.FirstOrDefault().Slide.Descendants<DocumentFormat.OpenXml.Drawing.TextBody>().First();
             //SlidePart slide1 = GetFirstSlide(oPDoc);
