@@ -60,7 +60,7 @@ namespace CheckListTemplates.Controllers
 
         public ActionResult Index()
         {
-            PresentationDocument oPDoc = PresentationDocument.Open(@"E:\DEV\Gawa2EZ_17-06-2017_2\Gawa2EZ\Gawa2EZ\TDM.pptx", true);
+            PresentationDocument oPDoc = PresentationDocument.Open(Server.MapPath("~/App_Data/TDM.pptx"), true);
             PresentationPart oPPart = oPDoc.PresentationPart;
             SlidePart sectionSlidePart = (SlidePart)oPPart.GetPartById("rId3");
             SlidePart sectionSlidePart2 = (SlidePart)oPPart.GetPartById("rId4");
@@ -73,20 +73,21 @@ namespace CheckListTemplates.Controllers
             //Run r = p.Elements<Run>().First();
             //DocumentFormat.OpenXml.Drawing.Text t = r.Elements<DocumentFormat.OpenXml.Drawing.Text>().First();
             //t.Text = "gendy101";
-            var tr = new TableRow();
-            TableCell tc1 = CreateTextCell("hi1");
-            tr.Append(tc1);
-            tc1 = CreateTextCell("hi2");
-            tr.Append(tc1);
-            tc1 = CreateTextCell("hi3");
-            tr.Append(tc1);
-            tc1 = CreateTextCell("hi114");
-            tr.Append(tc1);
-            tc1 = CreateTextCell("hi5");
-            tr.Append(tc1);
-            tc1 = CreateTextCell("hi6");
-            tr.Append(tc1);
-            tbl.Append(tr);
+
+            //var tr = new TableRow();
+            //TableCell tc1 = CreateTextCell("hi1");
+            //tr.Append(tc1);
+            //tc1 = CreateTextCell("hi2");
+            //tr.Append(tc1);
+            //tc1 = CreateTextCell("hi3");
+            //tr.Append(tc1);
+            //tc1 = CreateTextCell("hi114");
+            //tr.Append(tc1);
+            //tc1 = CreateTextCell("hi5");
+            //tr.Append(tc1);
+            //tc1 = CreateTextCell("hi6");
+            //tr.Append(tc1);
+            //tbl.Append(tr);
 
             foreach (var chartPart1 in sectionSlidePart2.ChartParts)
             {
@@ -151,22 +152,26 @@ namespace CheckListTemplates.Controllers
             //f.Close();
 
 
-            ImagePart imagePart = (ImagePart)sectionSlidePart.GetPartById("rId3");
-            if (imagePart != null)
-            {
-                using (FileStream fileStream = new FileStream(@"E:\IMG-20140921-WA0014.jpg", FileMode.Open))
-                {
-                    imagePart.FeedData(fileStream);
-                    fileStream.Close();
-                }
-            }
-            ImagePart imagePart2 = (ImagePart)sectionSlidePart.GetPartById("rId4");
-            sectionSlidePart.Slide.Save();
+            //ImagePart imagePart = (ImagePart)sectionSlidePart.GetPartById("rId3");
+            //if (imagePart != null)
+            //{
+            //    using (FileStream fileStream = new FileStream(Server.MapPath("~/App_Data/cup.png"), FileMode.Open))
+            //    {
+            //        imagePart.FeedData(fileStream);
+            //        fileStream.Close();
+            //    }
+            //}
+            //ImagePart imagePart2 = (ImagePart)sectionSlidePart.GetPartById("rId4");
+            //sectionSlidePart.Slide.Save();
+
+
+
             //XmlDocument doc = new XmlDocument();
             //doc.Load(slideLayoutPart.GetStream());
             //doc.Save("e:\\101.xml");
-            System.Drawing.Image img = System.Drawing.Image.FromStream(imagePart2.GetStream());
-            img.Save(@"E:\temp202.jpg");
+
+            //System.Drawing.Image img = System.Drawing.Image.FromStream(imagePart2.GetStream());
+            //img.Save(@"E:\temp202.jpg");
 
 
 
