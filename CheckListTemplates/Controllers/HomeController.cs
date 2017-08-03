@@ -1,7 +1,9 @@
-﻿using DocumentFormat.OpenXml.Drawing;
+﻿using CheckListTemplates.Models.DTO;
+using DocumentFormat.OpenXml.Drawing;
 using DocumentFormat.OpenXml.Drawing.Charts;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Presentation;
+using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
 using System.IO;
@@ -13,11 +15,13 @@ namespace CheckListTemplates.Controllers
 {
     public class HomeController : Controller
     {
-        void ChangeChartPart(ChartPart chartPart1)
-        {
-            ChartSpace chartSpace1 = chartPart1.ChartSpace;
+        public TDMGuestServices TDMGuestServices { get; set; }
 
-            DocumentFormat.OpenXml.Drawing.Charts.Chart chart1 = chartSpace1.GetFirstChild<DocumentFormat.OpenXml.Drawing.Charts.Chart>();
+        void setChartData(ChartPart chartPart1, ChartDataHolder[] ChartDataSlide)
+        {
+            ChartSpace chartSpace = chartPart1.ChartSpace;
+
+            DocumentFormat.OpenXml.Drawing.Charts.Chart chart1 = chartSpace.GetFirstChild<DocumentFormat.OpenXml.Drawing.Charts.Chart>();
             PlotArea plotArea1 = chart1.GetFirstChild<PlotArea>();
             BarChart barChart1 = plotArea1.GetFirstChild<BarChart>();
 
@@ -25,13 +29,23 @@ namespace CheckListTemplates.Controllers
             for (int i = 0; i < barChart1.Elements<BarChartSeries>().Count(); i++)
             {
                 BarChartSeries barChartSeries = barChart1.Elements<BarChartSeries>().ElementAtOrDefault(i);
+                ChartDataSlide dataModel = ChartDataSlide.ElementAtOrDefault(i).chartData;
+
+                SeriesText seriesText = barChartSeries.Elements<SeriesText>().ElementAtOrDefault(i);
+                if (seriesText != null)
+                {
+                    var stringReference = seriesText.Descendants<StringReference>().FirstOrDefault();
+                    var stringCache = stringReference.Descendants<StringCache>().FirstOrDefault();
+                    var stringPoint = stringCache.Descendants<StringPoint>().FirstOrDefault();
+                    var barLabel = stringPoint.GetFirstChild<NumericValue>();
+                    barLabel.Text = ChartDataSlide.ElementAtOrDefault(i).seriesText;
+                }
+
                 if (barChartSeries != null)
                 {
-
+                    
                     Values values1 = barChartSeries.GetFirstChild<Values>();
-
                     NumberReference numberReference1 = values1.GetFirstChild<NumberReference>();
-
                     NumberingCache numberingCache1 = numberReference1.GetFirstChild<NumberingCache>();
 
                     NumericPoint numericPoint1 = numberingCache1.GetFirstChild<NumericPoint>();
@@ -39,25 +53,33 @@ namespace CheckListTemplates.Controllers
                     NumericPoint numericPoint3 = numberingCache1.Elements<NumericPoint>().ElementAt(2);
 
                     NumericValue numericValue1 = numericPoint1.GetFirstChild<NumericValue>();
-                    numericValue1.Text = ".50";
+                    //numericValue1.Text = ".50";
+                    if (numericValue1 != null)
+                        numericValue1.Text = dataModel.Interaction.ToString();
 
 
                     NumericValue numericValue2 = numericPoint2.GetFirstChild<NumericValue>();
-                    numericValue2.Text = ".10";
+                    //numericValue2.Text = ".10";
+                    if (numericValue2 != null)
+                        numericValue2.Text = dataModel.Knowlegde.ToString();
 
 
                     NumericValue numericValue3 = numericPoint3.GetFirstChild<NumericValue>();
-                    numericValue3.Text = ".40";
+                    //numericValue3.Text = ".40";
+                    if (numericValue3 != null)
+                        numericValue3.Text = dataModel.Image.ToString();
 
 
                 }
             }
 
-            chartSpace1.Save();
+            chartSpace.Save();
         }
 
         public ActionResult Index()
         {
+            TDMGuestServices = loadFileData<TDMGuestServices>(Server.MapPath("~/App_Data/jsonData.txt"));
+
             PresentationDocument oPDoc = PresentationDocument.Open(Server.MapPath("~/App_Data/TDMGuestServices.pptx"), true);
             PresentationPart oPPart = oPDoc.PresentationPart;
             SlidePart sectionSlidePart = (SlidePart)oPPart.GetPartById("rId3");
@@ -87,7 +109,8 @@ namespace CheckListTemplates.Controllers
             //tr.Append(tc1);
             //tbl.Append(tr);
 
-            ChangeChartPart(sectionSlidePart2.ChartParts.ElementAt(0));
+            setChartData(sectionSlidePart2.ChartParts.ElementAt(0), TDMGuestServices.Chart1DataSlide2);
+            setChartData(sectionSlidePart2.ChartParts.ElementAt(1), TDMGuestServices.Chart2DataSlide2);
 
             //foreach (var chartPart1 in sectionSlidePart2.ChartParts)
             //{
@@ -184,6 +207,16 @@ namespace CheckListTemplates.Controllers
 
             return View();
         }
+
+        private T loadFileData<T>(string path)
+        {
+            FileStream fstream = new FileStream(path, FileMode.Open);
+            StreamReader reader = new StreamReader(fstream);
+            string json = reader.ReadToEnd();
+            T model = JsonConvert.DeserializeObject<T>(json);
+            return model;
+        }
+
         private static TableCell CreateTextCell(string text)
         {
             var textCol = new string[2];

@@ -1,0 +1,40 @@
+{  
+   "ProductKnowledgeSlide2":96,
+   "InterActionWithGuestsSlide2":16,
+   "ProfessionalImageSlide2":19,
+   "VisitsSlide3":77,
+   "VisitsYTDSlide3":88,
+   "ScoreSlide3":66,
+   "ScoreYTDlide3":16,
+   "Chart2DataSlide2":[{"chartData":{  
+         "Interaction":0.05,
+         "Knowlegde":0.0,
+         "Image":0.95
+      },"seriesText":"Jun-2017"} ],
+   "Chart1DataSlide2":[  
+      {"chartData":{  
+         "Interaction":0.05,
+         "Knowlegde":0.0,
+         "Image":0.95
+      },"seriesText":"Jun-2017"} 
+	  
+	  ,
+      {"chartData":{  
+         "Interaction":0.15,
+         "Knowlegde":0.10,
+         "Image":0.75
+      },"seriesText":"July-2017" },
+     
+	  {"chartData":{  
+         "Interaction":0.5,
+         "Knowlegde":0.70,
+         "Image":0.25
+      },"seriesText":"Aug-2017" },
+
+      {"chartData":{  
+         "Interaction":0.35,
+         "Knowlegde":0.40,
+         "Image":0.25
+      },"seriesText":"Sep-2017" }
+   ]
+}
