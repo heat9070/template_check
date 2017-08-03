@@ -39,15 +39,15 @@ namespace CheckListTemplates.Controllers
                     NumericPoint numericPoint3 = numberingCache1.Elements<NumericPoint>().ElementAt(2);
 
                     NumericValue numericValue1 = numericPoint1.GetFirstChild<NumericValue>();
-                    numericValue1.Text = ".20";
+                    numericValue1.Text = ".50";
 
 
                     NumericValue numericValue2 = numericPoint2.GetFirstChild<NumericValue>();
-                    numericValue2.Text = ".00";
+                    numericValue2.Text = ".10";
 
 
                     NumericValue numericValue3 = numericPoint3.GetFirstChild<NumericValue>();
-                    numericValue3.Text = ".80";
+                    numericValue3.Text = ".40";
 
 
                 }
