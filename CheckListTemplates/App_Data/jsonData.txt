@@ -1,22 +1,39 @@
 {  
-   "ProductKnowledgeSlide2":96,
-   "InterActionWithGuestsSlide2":16,
-   "ProfessionalImageSlide2":19,
-   "VisitsSlide3":77,
-   "VisitsYTDSlide3":88,
-   "ScoreSlide3":66,
-   "ScoreYTDlide3":16,
-   "Chart2DataSlide2":[{"chartData":{  
+   "ProductKnowledgeSlide2":"96",
+   "InterActionWithGuestsSlide2":"16",
+   "ProfessionalImageSlide2":"19",
+   "VisitsSlide3":"107",
+   "VisitsYTDSlide3":"81",
+   "ScoreSlide3":"12",
+   "ScoreYTDlide3":"9",
+   "Title1Slide3": "Customer journey and touchpoints assessment",
+   "Title2Slide3": "Guest Service April 17",
+   "Title1Slide2": "Customer journey and touchpoints assessment",
+   "Title2Slide2": "Guest Service April 17",
+   "Title1Slide6": "Customer journey and touchpoints assessment",
+   "Title2Slide6": "Guest Service April 17",
+   "Chart1Title":"Overall Score per month",
+   "Chart2Title":"Overall Score April 17",
+   "Month1MiddleSlide3":"JAN 2017",
+   "MonthValue1MiddleSlide3":"68%",
+   "Month2MiddleSlide3":"FEB 2017",
+   "MonthValue2MiddleSlide3":"18%",
+   "Month3MiddleSlide3":"MAR 2017",
+   "MonthValue3MiddleSlide3":"39%",
+   "Month4MiddleSlide3":"APR 2017",
+   "MonthValue4MiddleSlide3":"39%",
+   "ScoreValueMiddleSlide3":"40%",
+   "Chart2DataSlide3":[{"chartData":{  
          "Interaction":0.05,
          "Knowlegde":0.0,
          "Image":0.95
       },"seriesText":"Jun-2017"} ],
-   "Chart1DataSlide2":[  
+   "Chart1DataSlide3":[  
       {"chartData":{  
-         "Interaction":0.05,
+         "Interaction":0.35,
          "Knowlegde":0.0,
-         "Image":0.95
-      },"seriesText":"Jun-2017"} 
+         "Image":0.65
+      },"seriesText":"Jun-2017"}
 	  
 	  ,
       {"chartData":{  
@@ -36,5 +53,13 @@
          "Knowlegde":0.40,
          "Image":0.25
       },"seriesText":"Sep-2017" }
-   ]
+   ],
+   "TblDataSlide6":[
+	{"Date":"26.04.17", "Location":"FF Cinema Parking", "Time":"14:30", "Category":"Interaction with Guest", "Positive":"Associate Iman smiled warmly to customer. She was friendly & Helpful.", "Negative":"It was difficult to identify the staff's name as it was covered by their Abaya."}
+,	{"Date":"26.04.17", "Location":"FF Cinema Parking", "Time":"14:30", "Category":"Interaction with Guest", "Positive":"Associate Iman smiled warmly to customer. She was friendly & Helpful.", "Negative":"It was difficult to identify the staff's name as it was covered by their Abaya."}
+,	{"Date":"26.04.17", "Location":"FF Cinema Parking", "Time":"14:30", "Category":"Interaction with Guest", "Positive":"Associate Iman smiled warmly to customer. She was friendly & Helpful.", "Negative":"It was difficult to identify the staff's name as it was covered by their Abaya."}
+,	{"Date":"26.04.17", "Location":"FF Cinema Parking", "Time":"14:30", "Category":"Interaction with Guest", "Positive":"Associate Iman smiled warmly to customer. She was friendly & Helpful.", "Negative":"It was difficult to identify the staff's name as it was covered by their Abaya."}
+,	{"Date":"26.04.17", "Location":"FF Cinema Parking", "Time":"14:30", "Category":"Interaction with Guest", "Positive":"Associate Iman smiled warmly to customer. She was friendly & Helpful.", "Negative":"It was difficult to identify the staff's name as it was covered by their Abaya."}
+,	{"Date":"26.04.17", "Location":"FF Cinema Parking", "Time":"14:30", "Category":"Interaction with Guest", "Positive":"Associate Iman smiled warmly to customer. She was friendly & Helpful.", "Negative":"It was difficult to identify the staff's name as it was covered by their Abaya."}
+  ]
 }

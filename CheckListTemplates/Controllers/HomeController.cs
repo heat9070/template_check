@@ -8,6 +8,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Web;
 using System.Web.Mvc;
 
@@ -31,7 +32,7 @@ namespace CheckListTemplates.Controllers
                 BarChartSeries barChartSeries = barChart1.Elements<BarChartSeries>().ElementAtOrDefault(i);
                 ChartDataSlide dataModel = ChartDataSlide.ElementAtOrDefault(i).chartData;
 
-                SeriesText seriesText = barChartSeries.Elements<SeriesText>().ElementAtOrDefault(i);
+                SeriesText seriesText = barChartSeries.Elements<SeriesText>().ElementAtOrDefault(0);
                 if (seriesText != null)
                 {
                     var stringReference = seriesText.Descendants<StringReference>().FirstOrDefault();
@@ -84,8 +85,27 @@ namespace CheckListTemplates.Controllers
             PresentationPart oPPart = oPDoc.PresentationPart;
             SlidePart sectionSlidePart = (SlidePart)oPPart.GetPartById("rId3");
             SlidePart sectionSlidePart2 = (SlidePart)oPPart.GetPartById("rId4");
-            SlidePart sectionSlidePart3 = (SlidePart)oPPart.GetPartById("rId8");
-            var tbl = sectionSlidePart3.Slide.Descendants<Table>().First();
+            //SlidePart sectionSlidePart3 = (SlidePart)oPPart.GetPartById("rId8");
+            SlidePart sectionSlidePart4 = (SlidePart)oPPart.GetPartById("rId7");
+
+            var tbl = sectionSlidePart4.Slide.Descendants<Table>().First();
+            for (int i = 1; i < TDMGuestServices.TblDataSlide6.Length + 1; i++)
+            {
+                var tr1 = tbl.Descendants<TableRow>().ElementAtOrDefault(i);
+                setCellData(tr1, 0, TDMGuestServices.TblDataSlide6[i - 1].Date);
+
+                setCellData(tr1, 1, TDMGuestServices.TblDataSlide6[i - 1].Location);
+
+                setCellData(tr1, 2, TDMGuestServices.TblDataSlide6[i - 1].Time);
+
+                setCellData(tr1, 3, TDMGuestServices.TblDataSlide6[i - 1].Category);
+
+                setCellData(tr1, 4, TDMGuestServices.TblDataSlide6[i - 1].Positive);
+
+                setCellData(tr1, 5, TDMGuestServices.TblDataSlide6[i - 1].Negative);
+            }
+
+
             //var tr1 = tbl.Descendants<TableRow>().ElementAtOrDefault(2);
             //var cl1 = tr1.Descendants<TableCell>().FirstOrDefault();
             //DocumentFormat.OpenXml.Drawing.TextBody tb = cl1.Elements<DocumentFormat.OpenXml.Drawing.TextBody>().First();
@@ -109,8 +129,8 @@ namespace CheckListTemplates.Controllers
             //tr.Append(tc1);
             //tbl.Append(tr);
 
-            setChartData(sectionSlidePart2.ChartParts.ElementAt(0), TDMGuestServices.Chart1DataSlide2);
-            setChartData(sectionSlidePart2.ChartParts.ElementAt(1), TDMGuestServices.Chart2DataSlide2);
+            setChartData(sectionSlidePart2.ChartParts.ElementAt(0), TDMGuestServices.Chart1DataSlide3);
+            setChartData(sectionSlidePart2.ChartParts.ElementAt(1), TDMGuestServices.Chart2DataSlide3);
 
             //foreach (var chartPart1 in sectionSlidePart2.ChartParts)
             //{
@@ -132,39 +152,16 @@ namespace CheckListTemplates.Controllers
             //SlidePart slide1 = GetFirstSlide(oPDoc);
             //DocumentFormat.OpenXml.Drawing.Shape textBody1 = slide1.Slide.Descendants<DocumentFormat.OpenXml.Drawing.Shape>().First();
             //DocumentFormat.OpenXml.Drawing.TextBody textBody1 = sectionSlidePart.Slide.Descendants<DocumentFormat.OpenXml.Drawing.TextBody>().First();
-            foreach (var item in sectionSlidePart.Slide.Descendants())
-            {
-                if (item.GetType() == typeof(CommonSlideData))
-                {
-                    CommonSlideData sldData1 = (CommonSlideData)item;
-                    //var shapes1 = sldData1.Descendants<DocumentFormat.OpenXml.Drawing.Shape>();
-                    //var shapes2 = sldData1.Descendants<DocumentFormat.OpenXml.Drawing.TextBody>().ToList();
-                    //int count1 = shapes1.Count();
 
-                    ShapeTree tree = sldData1.ShapeTree;
-                    foreach (DocumentFormat.OpenXml.Presentation.Shape shape in tree.Elements<DocumentFormat.OpenXml.Presentation.Shape>())
-                    {
 
-                        // Run through all the paragraphs in the document
-                        foreach (Paragraph paragraph in shape.Descendants().OfType<Paragraph>())
-                        {
-                            foreach (Run run in paragraph.Elements<Run>())
-                            {
-                                if (run.Text.InnerText.Contains("Mohamed Elgendy"))
-                                {
-                                    run.Text = new DocumentFormat.OpenXml.Drawing.Text("Mohamed Elgendy2");
+            setStringValues(sectionSlidePart);
+            setStringValues(sectionSlidePart2);
+            setStringValues(sectionSlidePart4);
 
-                                }
-                            }
-
-                        }
-                    }
-                    sectionSlidePart.Slide.Save();
-                }
-
-            }
             sectionSlidePart2.Slide.Save();
-            sectionSlidePart3.Slide.Save();
+            //sectionSlidePart3.Slide.Save();
+            sectionSlidePart4.Slide.Save();
+
             //oPPart.Presentation.Save();
             oPDoc.PresentationPart.Presentation.Save();
             foreach (var slideMasterPart in oPDoc.PresentationPart.SlideMasterParts)
@@ -206,6 +203,231 @@ namespace CheckListTemplates.Controllers
 
 
             return View();
+        }
+
+        private static void setCellData(TableRow tr1, int index, string value)
+        {
+            var cell = tr1.Descendants<TableCell>().ElementAtOrDefault(index);
+            DocumentFormat.OpenXml.Drawing.TextBody tb = cell.Elements<DocumentFormat.OpenXml.Drawing.TextBody>().First();
+            Paragraph p = tb.Elements<Paragraph>().ElementAtOrDefault(0);
+            Run r = p.Elements<Run>().FirstOrDefault();
+            //Run r = new Run();
+            //RunProperties runProperties2 = new RunProperties() { Language = "en-US" };
+            //DocumentFormat.OpenXml.Drawing.Text t = new DocumentFormat.OpenXml.Drawing.Text();
+            //t.Text = value;
+            //r.Append(runProperties2);
+            //r.Append(t);
+            //p.Append(r);
+            if (r != null)
+            {
+                DocumentFormat.OpenXml.Drawing.Text t = r.Elements<DocumentFormat.OpenXml.Drawing.Text>().First();
+                t.Text = value;
+            }
+            else
+            {
+
+            }
+            //return t;
+        }
+
+        private void setStringValues(SlidePart sectionSlidePart)
+        {
+            foreach (var item in sectionSlidePart.Slide.Descendants())
+            {
+                if (item.GetType() == typeof(DocumentFormat.OpenXml.Presentation.Shape))
+                {
+                    foreach (Paragraph paragraph in item.Descendants().OfType<Paragraph>())
+                    {
+                        setRunData(paragraph);
+                    }
+                }
+
+                if (item.GetType() == typeof(ShapeTree))
+                {
+                    foreach (DocumentFormat.OpenXml.Presentation.Shape shape in item.Elements<DocumentFormat.OpenXml.Presentation.Shape>())
+                    {
+                        foreach (Paragraph paragraph in shape.Descendants().OfType<Paragraph>())
+                        {
+                            setRunData(paragraph);
+                        }
+                    }
+                }
+                if (item.GetType() == typeof(CommonSlideData))
+                {
+                    CommonSlideData sldData1 = (CommonSlideData)item;
+
+                    ShapeTree tree = sldData1.ShapeTree;
+                    foreach (DocumentFormat.OpenXml.Presentation.Shape shape in tree.Elements<DocumentFormat.OpenXml.Presentation.Shape>())
+                    {
+                        foreach (Paragraph paragraph in shape.Descendants().OfType<Paragraph>())
+                        {
+                            setRunData(paragraph);
+                        }
+                    }
+
+                    foreach (DocumentFormat.OpenXml.Presentation.GroupShape groupShape in tree.Elements<DocumentFormat.OpenXml.Presentation.GroupShape>())
+                    {
+                        foreach (DocumentFormat.OpenXml.Presentation.Shape shapeinner in groupShape.Elements<DocumentFormat.OpenXml.Presentation.Shape>())
+                        {
+                            foreach (Paragraph paragraph in shapeinner.Descendants().OfType<Paragraph>())
+                            {
+                                setRunData(paragraph);
+                            }
+                        }
+
+                        foreach (Paragraph paragraph in groupShape.Descendants().OfType<Paragraph>())
+                        {
+                            setRunData(paragraph);
+                        }
+                    }
+
+                    foreach (DocumentFormat.OpenXml.Presentation.GraphicFrame shape in tree.Elements<DocumentFormat.OpenXml.Presentation.GraphicFrame>())
+                    {
+                        foreach (Paragraph paragraph in shape.Descendants().OfType<Paragraph>())
+                        {
+                            setRunData(paragraph);
+                        }
+                    }
+
+                    foreach (DocumentFormat.OpenXml.Presentation.ConnectionShape shape in tree.Elements<DocumentFormat.OpenXml.Presentation.ConnectionShape>())
+                    {
+                        foreach (Paragraph paragraph in shape.Descendants().OfType<Paragraph>())
+                        {
+                            setRunData(paragraph);
+                        }
+                    }
+
+                    sectionSlidePart.Slide.Save();
+                }
+
+            }
+        }
+        
+        private void setRunData(Paragraph paragraph)
+        {
+            foreach (Run run in paragraph.Elements<Run>())
+            {
+                if ((GetPropertyName(() => TDMGuestServices.ScoreSlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.ScoreSlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.VisitsSlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.VisitsSlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.ScoreYTDlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.ScoreYTDlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.VisitsYTDSlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.VisitsYTDSlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.Title1Slide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.Title1Slide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.Title2Slide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.Title2Slide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.Title1Slide2).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.Title1Slide2);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.Title2Slide2).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.Title2Slide2);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.Chart1Title).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.Chart1Title);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.Chart2Title).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.Chart2Title);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.Month1MiddleSlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.Month1MiddleSlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.Month2MiddleSlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.Month2MiddleSlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.Month3MiddleSlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.Month3MiddleSlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.Month4MiddleSlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.Month4MiddleSlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.Month4MiddleSlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.Month4MiddleSlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.MonthValue4MiddleSlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.MonthValue4MiddleSlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.ScoreValueMiddleSlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.ScoreValueMiddleSlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.MonthValue1MiddleSlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.MonthValue1MiddleSlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.MonthValue2MiddleSlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.MonthValue2MiddleSlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.MonthValue3MiddleSlide3).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.MonthValue3MiddleSlide3);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.ProductKnowledgeSlide2).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.ProductKnowledgeSlide2);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.InterActionWithGuestsSlide2).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.InterActionWithGuestsSlide2);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.ProfessionalImageSlide2).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.ProfessionalImageSlide2);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.Title1Slide6).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.Title1Slide6);
+                }
+                else if ((GetPropertyName(() => TDMGuestServices.Title2Slide6).Contains(run.Text.InnerText)))
+                {
+                    run.Text = new DocumentFormat.OpenXml.Drawing.Text(TDMGuestServices.Title2Slide6);
+                }
+            }
+        }
+
+        #region utils
+        public static string GetPropertyName<T>(Expression<Func<T>> propertyLambda)
+        {
+            MemberExpression me = propertyLambda.Body as MemberExpression;
+            if (me == null)
+            {
+                throw new ArgumentException("You must pass a lambda of the form: '() => Class.Property' or '() => object.Property'");
+            }
+
+            string result = string.Empty;
+            do
+            {
+                result = me.Member.Name + "." + result;
+                me = me.Expression as MemberExpression;
+            } while (me != null);
+
+            result = result.Remove(result.Length - 1); // remove the trailing "."
+            return result;
         }
 
         private T loadFileData<T>(string path)
@@ -285,6 +507,7 @@ namespace CheckListTemplates.Controllers
             //return tc;
             return tableCell3;
         }
+        #endregion
 
         public ActionResult About()
         {
