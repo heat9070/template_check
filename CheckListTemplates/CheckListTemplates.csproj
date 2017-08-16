@@ -213,10 +213,14 @@
     <Compile Include="Controllers\AccountController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\ManageController.cs" />
+    <Compile Include="Controllers\PPTController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
     <Compile Include="Models\AccountViewModels.cs" />
+    <Compile Include="Models\DTO\ChartHolder.cs" />
+    <Compile Include="Models\DTO\RunTB.cs" />
+    <Compile Include="Models\DTO\Slide.cs" />
     <Compile Include="Models\DTO\TDMGuestServices.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\ManageViewModels.cs" />
@@ -286,6 +290,8 @@
     <Content Include="Views\Manage\VerifyPhoneNumber.cshtml" />
     <Content Include="Views\Shared\Lockout.cshtml" />
     <Content Include="Views\Shared\_LoginPartial.cshtml" />
+    <Content Include="Views\PPT\Index.cshtml" />
+    <Content Include="Views\PPT\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
