@@ -5,7 +5,7 @@ using System.Web;
 
 namespace CheckListTemplates.Models.DTO
 {
-    public class ChartHolder
+    public class TableDTO
     {
         public string Id { get; set; }
         public string Name { get; set; }

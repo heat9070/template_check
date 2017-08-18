@@ -1,4 +1,4 @@
-﻿@model IEnumerable<CheckListTemplates.Models.DTO.Slide>
+﻿@model IEnumerable<CheckListTemplates.Models.DTO.SlideDTO>
 
 @{
     ViewBag.Title = "Index";
@@ -24,9 +24,9 @@
             @Html.DisplayFor(modelItem => item.Name)
         </td>
         <td>
-            @Html.ActionLink("Edit", "Edit", new { id=item.Id }) |
-            @Html.ActionLink("Details", "Details", new { id=item.Id }) |
-            @Html.ActionLink("Delete", "Delete", new { id=item.Id })
+            @Html.ActionLink("TextBoxes", "TextBoxes", new { id=item.Id }) |
+            @Html.ActionLink("Charts", "Charts", new { id=item.Id }) |
+            @Html.ActionLink("Tables", "Tables", new { id=item.Id })
         </td>
     </tr>
 }

@@ -13,7 +13,7 @@ namespace CheckListTemplates.Controllers
 {
     public class PPTController : Controller
     {
-        PresentationDocument presentationDocument;
+        static PresentationDocument presentationDocument;
         PresentationPart presentationPart;
 
         //public PPTController()
@@ -26,36 +26,50 @@ namespace CheckListTemplates.Controllers
         {
             //presentationDocument = PresentationDocument.Open(Server.MapPath("~/App_Data/TDMGuestServices.pptx"), true);
             //presentationPart = presentationDocument.PresentationPart;
-            var lst = new List<Models.DTO.Slide>();
+            if (presentationDocument == null)
+                presentationDocument = PresentationDocument.Open(Server.MapPath("~/App_Data/TDMGuestServices.pptx"), true);
+            presentationPart = presentationDocument.PresentationPart;
+            var lst = new List<Models.DTO.SlideDTO>();
             foreach (DocumentFormat.OpenXml.Presentation.SlideId item in presentationPart.Presentation.SlideIdList)
             {
-                lst.Add(new Models.DTO.Slide { Id = item.RelationshipId, Name = item.RelationshipId });
+                lst.Add(new Models.DTO.SlideDTO { Id = item.RelationshipId, Name = item.RelationshipId });
             }
             //var slides = presentationPart.Presentation.SlideIdList.Select(o => new Slide { Id = presentationPart.GetPartById(o.RelationshipId}).ToList();
             return View(lst);
         }
 
-        public ActionResult Edit(string Id)
+        public ActionResult TextBoxes(string Id)
         {
-            presentationDocument = PresentationDocument.Open(Server.MapPath("~/App_Data/TDMGuestServices.pptx"), true);
+            if (presentationDocument == null)
+                presentationDocument = PresentationDocument.Open(Server.MapPath("~/App_Data/TDMGuestServices.pptx"), true);
             presentationPart = presentationDocument.PresentationPart;
             var slide = (SlidePart)presentationPart.GetPartById(Id);
-            var lst = new List<RunTB>();
+            var lst = new List<RunDTO>();
             setStringValues(slide, ref lst);
 
             return View(lst);
         }
 
-        public ActionResult Edit2(string Id)
+        public ActionResult Charts(string Id)
         {
-            presentationDocument = PresentationDocument.Open(Server.MapPath("~/App_Data/TDMGuestServices.pptx"), true);
+            if (presentationDocument == null)
+                presentationDocument = PresentationDocument.Open(Server.MapPath("~/App_Data/TDMGuestServices.pptx"), true);
             presentationPart = presentationDocument.PresentationPart;
             var slide = (SlidePart)presentationPart.GetPartById(Id);
 
-            var lst = new List<ChartHolder>();
+            var lst = new List<ChartDTO>();
             foreach (var chart in slide.ChartParts)
             {
-                lst.Add(new ChartHolder { Name = "" });
+                foreach (var item in chart.ChartSpace.Descendants())
+                {
+                    if (item.GetType() == typeof(DocumentFormat.OpenXml.Drawing.Charts.Title))
+                    {
+                        lst.Add(new ChartDTO { Name = ((DocumentFormat.OpenXml.Drawing.Charts.Title)item).ChartText.InnerText,
+                        Id = ((DocumentFormat.OpenXml.Drawing.Charts.Title)item).ChartText.InnerText
+                        });
+                    }
+
+                }
             }
 
             //var lst = new List<RunTB>();
@@ -63,7 +77,24 @@ namespace CheckListTemplates.Controllers
             return View(lst);
         }
 
-        private void setStringValues(SlidePart sectionSlidePart, ref List<RunTB> lst)
+        public ActionResult Tables(string Id)
+        {
+            if (presentationDocument == null)
+                presentationDocument = PresentationDocument.Open(Server.MapPath("~/App_Data/TDMGuestServices.pptx"), true);
+            presentationPart = presentationDocument.PresentationPart;
+            var slide = (SlidePart)presentationPart.GetPartById(Id);
+
+            var tables = slide.Slide.Descendants<Table>().ToList();
+            var lst = new List<TableDTO>();
+            foreach (var table in tables)
+            {
+                lst.Add(new TableDTO { Id = table.InnerText, Name = table.InnerText });
+            }
+
+            return View(lst);
+        }
+
+        private void setStringValues(SlidePart sectionSlidePart, ref List<RunDTO> lst)
         {
             foreach (var item in sectionSlidePart.Slide.Descendants())
             {
@@ -134,7 +165,7 @@ namespace CheckListTemplates.Controllers
             }
         }
 
-        private void setRunData(Paragraph paragraph, ref List<RunTB> lst)
+        private void setRunData(Paragraph paragraph, ref List<RunDTO> lst)
         {
             foreach (Run run in paragraph.Elements<Run>())
             {
@@ -144,7 +175,7 @@ namespace CheckListTemplates.Controllers
                     var matches = Regex.Matches(run.Text.Text, pattern);
                     foreach (var match in matches)
                     {
-                        lst.Add(new Models.DTO.RunTB { Text = run.Text.Text });
+                        lst.Add(new Models.DTO.RunDTO { Text = run.Text.Text });
                     }
 
                 }

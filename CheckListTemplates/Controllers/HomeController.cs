@@ -79,121 +79,121 @@ namespace CheckListTemplates.Controllers
 
         public ActionResult Index()
         {
-            TDMGuestServices = loadFileData<TDMGuestServices>(Server.MapPath("~/App_Data/jsonData.txt"));
+            //TDMGuestServices = loadFileData<TDMGuestServices>(Server.MapPath("~/App_Data/jsonData.txt"));
 
-            PresentationDocument oPDoc = PresentationDocument.Open(Server.MapPath("~/App_Data/TDMGuestServices.pptx"), true);
-            PresentationPart oPPart = oPDoc.PresentationPart;
-            SlidePart sectionSlidePart = (SlidePart)oPPart.GetPartById("rId3");
-            SlidePart sectionSlidePart2 = (SlidePart)oPPart.GetPartById("rId4");
-            //SlidePart sectionSlidePart3 = (SlidePart)oPPart.GetPartById("rId8");
-            SlidePart sectionSlidePart4 = (SlidePart)oPPart.GetPartById("rId7");
+            //PresentationDocument oPDoc = PresentationDocument.Open(Server.MapPath("~/App_Data/TDMGuestServices.pptx"), true);
+            //PresentationPart oPPart = oPDoc.PresentationPart;
+            //SlidePart sectionSlidePart = (SlidePart)oPPart.GetPartById("rId3");
+            //SlidePart sectionSlidePart2 = (SlidePart)oPPart.GetPartById("rId4");
+            ////SlidePart sectionSlidePart3 = (SlidePart)oPPart.GetPartById("rId8");
+            //SlidePart sectionSlidePart4 = (SlidePart)oPPart.GetPartById("rId7");
 
-            var tbl = sectionSlidePart4.Slide.Descendants<Table>().First();
-            for (int i = 1; i < TDMGuestServices.TblDataSlide6.Length + 1; i++)
-            {
-                var tr1 = tbl.Descendants<TableRow>().ElementAtOrDefault(i);
-                setCellData(tr1, 0, TDMGuestServices.TblDataSlide6[i - 1].Date);
-
-                setCellData(tr1, 1, TDMGuestServices.TblDataSlide6[i - 1].Location);
-
-                setCellData(tr1, 2, TDMGuestServices.TblDataSlide6[i - 1].Time);
-
-                setCellData(tr1, 3, TDMGuestServices.TblDataSlide6[i - 1].Category);
-
-                setCellData(tr1, 4, TDMGuestServices.TblDataSlide6[i - 1].Positive);
-
-                setCellData(tr1, 5, TDMGuestServices.TblDataSlide6[i - 1].Negative);
-            }
-
-
-            //var tr1 = tbl.Descendants<TableRow>().ElementAtOrDefault(2);
-            //var cl1 = tr1.Descendants<TableCell>().FirstOrDefault();
-            //DocumentFormat.OpenXml.Drawing.TextBody tb = cl1.Elements<DocumentFormat.OpenXml.Drawing.TextBody>().First();
-            //Paragraph p = tb.Elements<Paragraph>().ElementAtOrDefault(0);
-            //Run r = p.Elements<Run>().First();
-            //DocumentFormat.OpenXml.Drawing.Text t = r.Elements<DocumentFormat.OpenXml.Drawing.Text>().First();
-            //t.Text = "gendy101";
-
-            //var tr = new TableRow();
-            //TableCell tc1 = CreateTextCell("hi1");
-            //tr.Append(tc1);
-            //tc1 = CreateTextCell("hi2");
-            //tr.Append(tc1);
-            //tc1 = CreateTextCell("hi3");
-            //tr.Append(tc1);
-            //tc1 = CreateTextCell("hi114");
-            //tr.Append(tc1);
-            //tc1 = CreateTextCell("hi5");
-            //tr.Append(tc1);
-            //tc1 = CreateTextCell("hi6");
-            //tr.Append(tc1);
-            //tbl.Append(tr);
-
-            setChartData(sectionSlidePart2.ChartParts.ElementAt(0), TDMGuestServices.Chart1DataSlide3);
-            setChartData(sectionSlidePart2.ChartParts.ElementAt(1), TDMGuestServices.Chart2DataSlide3);
-
-            //foreach (var chartPart1 in sectionSlidePart2.ChartParts)
+            //var tbl = sectionSlidePart4.Slide.Descendants<Table>().First();
+            //for (int i = 1; i < TDMGuestServices.TblDataSlide6.Length + 1; i++)
             //{
-            //    try
-            //    {
-            //        ChangeChartPart(chartPart1);
+            //    var tr1 = tbl.Descendants<TableRow>().ElementAtOrDefault(i);
+            //    setCellData(tr1, 0, TDMGuestServices.TblDataSlide6[i - 1].Date);
 
-            //    }
-            //    catch (Exception ex)
-            //    {
+            //    setCellData(tr1, 1, TDMGuestServices.TblDataSlide6[i - 1].Location);
 
-            //    }
+            //    setCellData(tr1, 2, TDMGuestServices.TblDataSlide6[i - 1].Time);
 
+            //    setCellData(tr1, 3, TDMGuestServices.TblDataSlide6[i - 1].Category);
+
+            //    setCellData(tr1, 4, TDMGuestServices.TblDataSlide6[i - 1].Positive);
+
+            //    setCellData(tr1, 5, TDMGuestServices.TblDataSlide6[i - 1].Negative);
             //}
 
 
-            //SlideLayoutPart slideLayoutPart = (SlideLayoutPart)sectionSlidePart.GetPartById("rId1");
-            //DocumentFormat.OpenXml.Drawing.TextBody textBody1 = sectionSlidePart.SlideParts.FirstOrDefault().Slide.Descendants<DocumentFormat.OpenXml.Drawing.TextBody>().First();
-            //SlidePart slide1 = GetFirstSlide(oPDoc);
-            //DocumentFormat.OpenXml.Drawing.Shape textBody1 = slide1.Slide.Descendants<DocumentFormat.OpenXml.Drawing.Shape>().First();
-            //DocumentFormat.OpenXml.Drawing.TextBody textBody1 = sectionSlidePart.Slide.Descendants<DocumentFormat.OpenXml.Drawing.TextBody>().First();
+            ////var tr1 = tbl.Descendants<TableRow>().ElementAtOrDefault(2);
+            ////var cl1 = tr1.Descendants<TableCell>().FirstOrDefault();
+            ////DocumentFormat.OpenXml.Drawing.TextBody tb = cl1.Elements<DocumentFormat.OpenXml.Drawing.TextBody>().First();
+            ////Paragraph p = tb.Elements<Paragraph>().ElementAtOrDefault(0);
+            ////Run r = p.Elements<Run>().First();
+            ////DocumentFormat.OpenXml.Drawing.Text t = r.Elements<DocumentFormat.OpenXml.Drawing.Text>().First();
+            ////t.Text = "gendy101";
+
+            ////var tr = new TableRow();
+            ////TableCell tc1 = CreateTextCell("hi1");
+            ////tr.Append(tc1);
+            ////tc1 = CreateTextCell("hi2");
+            ////tr.Append(tc1);
+            ////tc1 = CreateTextCell("hi3");
+            ////tr.Append(tc1);
+            ////tc1 = CreateTextCell("hi114");
+            ////tr.Append(tc1);
+            ////tc1 = CreateTextCell("hi5");
+            ////tr.Append(tc1);
+            ////tc1 = CreateTextCell("hi6");
+            ////tr.Append(tc1);
+            ////tbl.Append(tr);
+
+            //setChartData(sectionSlidePart2.ChartParts.ElementAt(0), TDMGuestServices.Chart1DataSlide3);
+            //setChartData(sectionSlidePart2.ChartParts.ElementAt(1), TDMGuestServices.Chart2DataSlide3);
+
+            ////foreach (var chartPart1 in sectionSlidePart2.ChartParts)
+            ////{
+            ////    try
+            ////    {
+            ////        ChangeChartPart(chartPart1);
+
+            ////    }
+            ////    catch (Exception ex)
+            ////    {
+
+            ////    }
+
+            ////}
 
 
-            setStringValues(sectionSlidePart);
-            setStringValues(sectionSlidePart2);
-            setStringValues(sectionSlidePart4);
-
-            sectionSlidePart2.Slide.Save();
-            //sectionSlidePart3.Slide.Save();
-            sectionSlidePart4.Slide.Save();
-
-            //oPPart.Presentation.Save();
-            oPDoc.PresentationPart.Presentation.Save();
-            foreach (var slideMasterPart in oPDoc.PresentationPart.SlideMasterParts)
-            {
-                slideMasterPart.SlideMaster.Save();
-            }
-
-            //System.IO.FileStream f = new FileStream(@"E:\test111.pptx", FileMode.Create);
-            //oPPart.GetStream().CopyTo(f);
-            //f.Close();
+            ////SlideLayoutPart slideLayoutPart = (SlideLayoutPart)sectionSlidePart.GetPartById("rId1");
+            ////DocumentFormat.OpenXml.Drawing.TextBody textBody1 = sectionSlidePart.SlideParts.FirstOrDefault().Slide.Descendants<DocumentFormat.OpenXml.Drawing.TextBody>().First();
+            ////SlidePart slide1 = GetFirstSlide(oPDoc);
+            ////DocumentFormat.OpenXml.Drawing.Shape textBody1 = slide1.Slide.Descendants<DocumentFormat.OpenXml.Drawing.Shape>().First();
+            ////DocumentFormat.OpenXml.Drawing.TextBody textBody1 = sectionSlidePart.Slide.Descendants<DocumentFormat.OpenXml.Drawing.TextBody>().First();
 
 
-            //ImagePart imagePart = (ImagePart)sectionSlidePart.GetPartById("rId3");
-            //if (imagePart != null)
+            //setStringValues(sectionSlidePart);
+            //setStringValues(sectionSlidePart2);
+            //setStringValues(sectionSlidePart4);
+
+            //sectionSlidePart2.Slide.Save();
+            ////sectionSlidePart3.Slide.Save();
+            //sectionSlidePart4.Slide.Save();
+
+            ////oPPart.Presentation.Save();
+            //oPDoc.PresentationPart.Presentation.Save();
+            //foreach (var slideMasterPart in oPDoc.PresentationPart.SlideMasterParts)
             //{
-            //    using (FileStream fileStream = new FileStream(Server.MapPath("~/App_Data/cup.png"), FileMode.Open))
-            //    {
-            //        imagePart.FeedData(fileStream);
-            //        fileStream.Close();
-            //    }
+            //    slideMasterPart.SlideMaster.Save();
             //}
-            //ImagePart imagePart2 = (ImagePart)sectionSlidePart.GetPartById("rId4");
-            //sectionSlidePart.Slide.Save();
+
+            ////System.IO.FileStream f = new FileStream(@"E:\test111.pptx", FileMode.Create);
+            ////oPPart.GetStream().CopyTo(f);
+            ////f.Close();
+
+
+            ////ImagePart imagePart = (ImagePart)sectionSlidePart.GetPartById("rId3");
+            ////if (imagePart != null)
+            ////{
+            ////    using (FileStream fileStream = new FileStream(Server.MapPath("~/App_Data/cup.png"), FileMode.Open))
+            ////    {
+            ////        imagePart.FeedData(fileStream);
+            ////        fileStream.Close();
+            ////    }
+            ////}
+            ////ImagePart imagePart2 = (ImagePart)sectionSlidePart.GetPartById("rId4");
+            ////sectionSlidePart.Slide.Save();
 
 
 
-            //XmlDocument doc = new XmlDocument();
-            //doc.Load(slideLayoutPart.GetStream());
-            //doc.Save("e:\\101.xml");
+            ////XmlDocument doc = new XmlDocument();
+            ////doc.Load(slideLayoutPart.GetStream());
+            ////doc.Save("e:\\101.xml");
 
-            //System.Drawing.Image img = System.Drawing.Image.FromStream(imagePart2.GetStream());
-            //img.Save(@"E:\temp202.jpg");
+            ////System.Drawing.Image img = System.Drawing.Image.FromStream(imagePart2.GetStream());
+            ////img.Save(@"E:\temp202.jpg");
 
 
 

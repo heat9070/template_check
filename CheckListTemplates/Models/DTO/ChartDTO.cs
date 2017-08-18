@@ -5,9 +5,9 @@ using System.Web;
 
 namespace CheckListTemplates.Models.DTO
 {
-    public class RunTB
+    public class ChartDTO
     {
         public string Id { get; set; }
-        public string Text { get; set; }
+        public string Name { get; set; }
     }
 }
